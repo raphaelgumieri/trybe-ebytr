@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (_req, res) => res.send('uhul!'));
 
-app.use('task', taskRoute);
+app.use('/tasks', taskRoute);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}`));
 
