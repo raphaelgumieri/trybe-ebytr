@@ -1,4 +1,5 @@
 // const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const getAllTasks = async () => {
@@ -19,7 +20,14 @@ const createNewTask = async (taskName, assignee, status) => {
   };
 };
 
+const getTaskById = async (id) => {
+  const db = await connection();
+  const task = await db.collection('tasks').findOne({ _id: ObjectId(id) });
+  return task;
+};
+
 module.exports = {
   getAllTasks,
   createNewTask,
+  getTaskById,
 };

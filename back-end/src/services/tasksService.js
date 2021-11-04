@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const Joi = require('joi');
 const tasksModel = require('../models/tasksModel');
 
@@ -11,6 +12,8 @@ const validTask = (taskName, assignee, status) => {
   return true;
 };
 
+const validId = (id) => ObjectId.isValid(id);
+
 const getAllTasks = async () => tasksModel.getAllTasks();
 
 const createNewTask = async (taskName, assignee, status) => {
@@ -19,7 +22,19 @@ const createNewTask = async (taskName, assignee, status) => {
   return tasksModel.createNewTask(taskName, assignee, status);
 };
 
+const getTaskById = async (id) => {
+  if (!validId(id)) { return { message: 'id not  valid' }; }
+  const task = await tasksModel.getTaskById(id);
+  if (!task) return { message: 'id not found' };
+  return task;
+};
+
+// const updateTask = async (id, body) => {
+
+// };
+
 module.exports = {
   getAllTasks,
   createNewTask,
+  getTaskById,
 };
