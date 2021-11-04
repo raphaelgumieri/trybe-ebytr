@@ -29,12 +29,22 @@ const getTaskById = async (id) => {
   return task;
 };
 
-// const updateTask = async (id, body) => {
+const updateTask = async (id, body) => {
+  const { taskName, assignee, status } = body;
+  const isValid = validTask(taskName, assignee, status);
+  if (isValid.details) { return isValid.details[0]; }
 
-// };
+  if (!validId(id)) { return { message: 'id not  valid' }; }
+  const task = await tasksModel.getTaskById(id);
+  if (!task) return { message: 'id not found' };
+
+  const updatedTask = tasksModel.updateTask(id, body);
+  return updatedTask;
+};
 
 module.exports = {
   getAllTasks,
   createNewTask,
   getTaskById,
+  updateTask,
 };

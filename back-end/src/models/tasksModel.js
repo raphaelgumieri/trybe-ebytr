@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
@@ -26,8 +25,24 @@ const getTaskById = async (id) => {
   return task;
 };
 
+const updateTask = async (id, body) => {
+  const { taskName, assignee, status } = body;
+  const db = await connection();
+  await db.collection('tasks').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { taskName, assignee, status } },
+  );
+  return {
+    _id: id,
+    taskName,
+    assignee,
+    status,
+  };
+};
+
 module.exports = {
   getAllTasks,
   createNewTask,
   getTaskById,
+  updateTask,
 };

@@ -19,16 +19,17 @@ const getTaskById = async (req, res) => {
   return res.status(200).json(taskById);
 };
 
-// const updateTask = async (req, res) => {
-//   const { id } = req.params;
-//   const { body } = req;
-//   const updatedTask = await tasksService.updateTask(id, body);
-//   return res.status(200).json(updatedTask);
-// };
+const updateTask = async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  const updatedTask = await tasksService.updateTask(id, body);
+  if (updatedTask.message) return res.status(400).json(updatedTask.message);
+  return res.status(200).json(updatedTask);
+};
 
 module.exports = {
   getAllTasks,
   createNewTask,
   getTaskById,
-  // updateTask,
+  updateTask,
 };
