@@ -40,9 +40,15 @@ const updateTask = async (id, body) => {
   };
 };
 
+const deleteTask = async (id) => {
+  const db = await connection();
+  return db.collection('tasks').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   getAllTasks,
   createNewTask,
   getTaskById,
   updateTask,
+  deleteTask,
 };

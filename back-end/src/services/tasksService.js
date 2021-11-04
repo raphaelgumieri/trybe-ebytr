@@ -42,9 +42,17 @@ const updateTask = async (id, body) => {
   return updatedTask;
 };
 
+const deleteTask = async (id) => {
+  if (!validId(id)) { return { message: 'id not  valid' }; }
+  const task = await tasksModel.getTaskById(id);
+  if (!task) return { message: 'id not found' };
+  return tasksModel.deleteTask(id);
+};
+
 module.exports = {
   getAllTasks,
   createNewTask,
   getTaskById,
   updateTask,
+  deleteTask,
 };
